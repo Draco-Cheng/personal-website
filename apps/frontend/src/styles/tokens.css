@@ -1,0 +1,41 @@
+@layer tokens {
+  :root {
+    /* Core surfaces */
+    --background: 210 32% 99%;
+    --foreground: 222 47% 11%;
+    --surface: 210 40% 96%;
+    --surface-strong: 214 32% 91%;
+
+    /* Brand */
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 187 92% 48%;
+    --secondary-foreground: 210 40% 98%;
+
+    /* Accent & state */
+    --muted: 215 20% 80%;
+    --muted-foreground: 221 47% 21%;
+
+    /* Shadows, radii, spacing */
+    --shadow-sm: 0 2px 8px rgba(37, 99, 235, 0.04);
+    --radius-md: 6px;
+    --space-sm: 0.5rem;
+    --space-md: 1.25rem;
+    --transition-base: 0.15s ease;
+  }
+
+  .dark {
+    --background: 222 47% 5%;
+    --foreground: 210 40% 98%;
+    --surface: 222 47% 7%;
+    --surface-strong: 222 47% 12%;
+
+    --primary: 221 83% 66%;
+    --primary-foreground: 222 47% 5%;
+    --secondary: 187 92% 62%;
+    --secondary-foreground: 222 47% 5%;
+
+    --muted: 215 20% 18%;
+    --muted-foreground: 210 40% 80%;
+  }
+}

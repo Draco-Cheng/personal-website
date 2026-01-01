@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -14,6 +14,26 @@ const links = [
 
 const Menu: React.FC = () => {
   const pathname = usePathname();
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem("theme") as "light" | "dark" | null;
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initial = stored ?? (prefersDark ? "dark" : "light");
+    setTheme(initial);
+    document.documentElement.classList.toggle("dark", initial === "dark");
+    document.documentElement.style.colorScheme = initial === "dark" ? "dark" : "light";
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    document.documentElement.style.colorScheme = theme === "dark" ? "dark" : "light";
+    window.localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
 
   return (
     <nav className={styles.menu}>
@@ -34,6 +54,14 @@ const Menu: React.FC = () => {
           {link.label}
         </Link>
       ))}
+      <button
+        type="button"
+        className={styles.themeToggle}
+        aria-label="Toggle color theme"
+        onClick={toggleTheme}
+      >
+        {theme === "dark" ? "☾" : "☀"}
+      </button>
     </nav>
   );
 };
