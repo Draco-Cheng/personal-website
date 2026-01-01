@@ -2,6 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
+
 import { usePathname } from "next/navigation";
 import styles from "./Menu.module.css";
 
@@ -15,6 +17,9 @@ const Menu: React.FC = () => {
 
   return (
     <nav className={styles.menu}>
+      <Link href="/" className={styles.logo}>
+        <Image src="/logo-g.png" alt="Logo" fill={true} objectFit="contain" />
+      </Link>
       {links.map((link) => (
         <Link
           key={link.href}
