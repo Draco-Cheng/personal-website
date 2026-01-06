@@ -75,17 +75,17 @@ const contactLinks = [
 const ProfilePage: React.FC = () => (
   <div className={styles.page}>
     <section className={styles.hero}>
-      <p className={styles.eyebrow}>Full-stack Engineer · Product Architect</p>
+      <p className={styles.eyebrow}>Senior Software Engineer · Product Architect</p>
       <h1 className={styles.title}>Hi, I’m Draco Cheng.</h1>
       <p className={styles.subtitle}>
         I craft resilient, accessible web apps with a focus on delightful developer experience and measurable outcomes.
       </p>
       <div className={styles.actions}>
-        <Button asChild>
+        {/* <Button asChild>
           <Link href="/resume.pdf" target="_blank" rel="noopener noreferrer">
             Download Résumé
           </Link>
-        </Button>
+        </Button> */}
         <Link className={styles.secondaryAction} href="#projects">
           View projects
         </Link>

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { Sun, Moon } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -8,8 +9,7 @@ import { usePathname } from "next/navigation";
 import styles from "./Menu.module.css";
 
 const links = [
-  { href: "/", label: "Dashboard" },
-  { href: "/ping", label: "Ping API Demo" },
+  // { href: "/", label: "Dashboard" },
 ];
 
 const Menu: React.FC = () => {
@@ -60,7 +60,7 @@ const Menu: React.FC = () => {
         aria-label="Toggle color theme"
         onClick={toggleTheme}
       >
-        {theme === "dark" ? "☾" : "☀"}
+        {theme === "dark" ? <Moon /> : <Sun />}
       </button>
     </nav>
   );

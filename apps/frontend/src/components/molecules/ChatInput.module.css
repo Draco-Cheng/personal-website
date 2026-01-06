@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  gap: var(--space-sm, 0.5rem);
+  padding: var(--space-md, 1rem);
+  background: hsl(var(--background));
+  border-top: 1px solid hsl(var(--muted));
+}
+
+.input {
+  flex: 1;
+  padding: var(--space-sm, 0.5rem) var(--space-md, 0.75rem);
+  border: 1px solid hsl(var(--muted));
+  border-radius: var(--radius-md, 6px);
+  background: hsl(var(--surface));
+  color: hsl(var(--foreground));
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color var(--transition-base, 0.15s ease);
+}
+
+.input:focus {
+  outline: none;
+  border-color: hsl(var(--primary));
+}
+
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.input::placeholder {
+  color: hsl(var(--muted-foreground));
+}

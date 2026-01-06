@@ -1,0 +1,71 @@
+.widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+}
+
+.chatContainer {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  animation: slideUp 0.3s ease-out;
+}
+
+.bubble {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border: none;
+  font-size: 1.75rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-base, 0.15s ease),
+    box-shadow var(--transition-base, 0.15s ease);
+}
+
+.bubble:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.bubble:active {
+  transform: scale(0.95);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .widget {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .bubble {
+    width: 56px;
+    height: 56px;
+    font-size: 1.5rem;
+  }
+
+  .chatContainer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+  }
+}
