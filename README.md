@@ -2,7 +2,7 @@
 
 ## Monorepo Workspace (Nx + TypeScript + Python)
 
-> Source: https://github.com/Draco-Cheng/mono-repo-skeleton (public template)
+> Source: https://github.com/Draco-Cheng/personal-website (public template)
 
 MonoRepoSkeleton is Draco-Cheng’s opinionated Nx template that pairs a Next.js 15 frontend with a FastAPI backend, wired for Docker, Helm, and CI-ready testing presets. It is designed as a starting point for full-stack teams that want TypeScript and Python coexisting in one workspace with consistent tooling, linting, and deployment scaffolding.
 
@@ -11,7 +11,7 @@ MonoRepoSkeleton is Draco-Cheng’s opinionated Nx template that pairs a Next.js
 ## 🏗️ Project Structure
 
 ```
-mono-repo-skeleton/
+personal-website/
 ├── apps/
 │   ├── backend/                # FastAPI Python backend (API server)
 │   │   ├── main.py            # FastAPI application entry point
