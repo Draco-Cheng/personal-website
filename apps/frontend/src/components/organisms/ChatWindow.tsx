@@ -32,7 +32,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   return (
     <div className={styles.window}>
       <div className={styles.header}>
-        <h3 className={styles.title}>Chat with Draco's AI Assistant</h3>
+        <h3 className={styles.title}>Chat with Draco&apos;s AI Assistant</h3>
         <button
           onClick={onClose}
           className={styles.closeButton}

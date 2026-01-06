@@ -110,16 +110,16 @@ def chat(request: ChatRequest) -> ChatResponse:
     Accepts a user message and optional conversation history.
     Returns an AI response based on Draco's profile information.
     """
-    if not client:
-        raise HTTPException(
-            status_code=503,
-            detail="OpenAI service is not available. Please configure OPENAI_API_KEY."
-        )
-
     if not request.message or not request.message.strip():
         raise HTTPException(
             status_code=400,
             detail="Message cannot be empty"
+        )
+
+    if not client:
+        raise HTTPException(
+            status_code=503,
+            detail="OpenAI service is not available. Please configure OPENAI_API_KEY."
         )
 
     try:

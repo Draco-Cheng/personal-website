@@ -8,7 +8,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import styles from "./Menu.module.css";
 
-const links = [
+const links: { href: string; label: string }[] = [
   // { href: "/", label: "Dashboard" },
 ];
 
@@ -17,17 +17,24 @@ const Menu: React.FC = () => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("theme") as "light" | "dark" | null;
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const stored = window.localStorage.getItem("theme") as
+      | "light"
+      | "dark"
+      | null;
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
     const initial = stored ?? (prefersDark ? "dark" : "light");
     setTheme(initial);
     document.documentElement.classList.toggle("dark", initial === "dark");
-    document.documentElement.style.colorScheme = initial === "dark" ? "dark" : "light";
+    document.documentElement.style.colorScheme =
+      initial === "dark" ? "dark" : "light";
   }, []);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
-    document.documentElement.style.colorScheme = theme === "dark" ? "dark" : "light";
+    document.documentElement.style.colorScheme =
+      theme === "dark" ? "dark" : "light";
     window.localStorage.setItem("theme", theme);
   }, [theme]);
 
