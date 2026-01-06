@@ -53,6 +53,16 @@ apps/frontend/
 
 ---
 
+
+### Styling & Tokens
+- Global design tokens live in `src/styles/tokens.css`, imported once from `src/app/globals.css`
+- Reference shared colors, spacing, radii, and shadows via CSS variables (e.g., `var(--color-surface)`) inside component modules
+- Keep component-specific overrides inside their local `.module.css` unless a value will be reused elsewhere
+
+### Theming
+- Light and dark palettes are defined via CSS variables in `src/styles/tokens.css` (`:root` for light, `.dark` overrides for dark)
+- `src/app/globals.css` toggles palettes using the `.dark` class plus `color-scheme`; ensure the `<html>` element receives the class via your theme switcher
+- Tailwind reads the same tokens through `tailwind.config.ts`, so utilities like `bg-primary` and CSS Modules both resolve to the shared values
 ## Application-level Logic
 
 - Components using Next.js context (e.g., `usePathname`, navigation) should be placed in `templates/` or `pages/`, not in atomic folders.

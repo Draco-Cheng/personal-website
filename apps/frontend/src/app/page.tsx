@@ -1,4 +1,4 @@
-import WelcomeDashboard from "../components/pages/WelcomeDashboard";
+import ProfilePage from "../components/pages/ProfilePage";
 
 // Next.js route for /
-export default WelcomeDashboard;
+export default ProfilePage;

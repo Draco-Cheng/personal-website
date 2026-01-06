@@ -3,7 +3,7 @@ import styles from "./Footer.module.css";
 
 const Footer: React.FC = () => (
   <footer className={styles.footer} data-testid="footer">
-    &copy; {new Date().getFullYear()} Nx + Next.js + FastAPI Monorepo Example
+    © 2026 Draco Cheng · Crafted with Next.js & FastAPI
   </footer>
 );
 
