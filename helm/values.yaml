@@ -8,4 +8,4 @@ ingress:
     - paths:
         - path: /
           serviceName: frontend-service
-          servicePort: 80
+          servicePort: 8080
