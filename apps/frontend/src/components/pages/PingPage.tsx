@@ -20,7 +20,7 @@ const PingPage: React.FC = () => {
           This is a fullstack example using <b>Next.js</b> (frontend) and <b>FastAPI</b> (backend).
         </p>
         <ApiResult loading={loading} result={pingResult} apiPrefix="/api" />
-        <Button onClick={refresh}>Refresh</Button>
+        <Button onClick={refresh}>Refresh!</Button>
       </Card>
       <Footer />
     </div>
