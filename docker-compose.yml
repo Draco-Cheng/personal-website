@@ -32,3 +32,13 @@ services:
       - "8000:8000"
     environment:
       - PYTHONUNBUFFERED=1
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - MONGODB_URI=${MONGODB_URI}
+      - ADMIN_API_KEY=${ADMIN_API_KEY}
+      - MONGODB_DB_NAME=${MONGODB_DB_NAME:-personal_website}
+      - MONGODB_COLLECTION=${MONGODB_COLLECTION:-documents}
+      - VECTOR_INDEX_NAME=${VECTOR_INDEX_NAME:-vector_index}
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL:-text-embedding-3-small}
+      - CHUNK_SIZE=${CHUNK_SIZE:-1000}
+      - CHUNK_OVERLAP=${CHUNK_OVERLAP:-200}
+      - MAX_FILE_SIZE_MB=${MAX_FILE_SIZE_MB:-10}
