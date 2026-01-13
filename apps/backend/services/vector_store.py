@@ -5,7 +5,6 @@ Handles storage and retrieval of document embeddings.
 
 from typing import List, Dict, Optional
 import config
-from datetime import datetime
 
 async def get_collection():
     """Get the MongoDB collection for documents"""

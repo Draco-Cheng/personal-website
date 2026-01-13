@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 from typing import Optional
-from datetime import datetime
 
 class DocumentMetadata(BaseModel):
     """Metadata for a document chunk"""

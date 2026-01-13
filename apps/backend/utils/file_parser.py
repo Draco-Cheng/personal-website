@@ -3,7 +3,6 @@ File parsing utilities for extracting text from various document formats.
 Supports: PDF, DOCX, XLSX, Markdown, and plain text files.
 """
 
-from typing import Optional
 import io
 
 def parse_pdf(file_content: bytes) -> str:

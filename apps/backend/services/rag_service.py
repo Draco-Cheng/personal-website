@@ -170,5 +170,5 @@ async def has_documents() -> bool:
     try:
         stats = await vector_store.get_storage_stats()
         return stats.get("total_documents", 0) > 0
-    except:
+    except Exception:
         return False

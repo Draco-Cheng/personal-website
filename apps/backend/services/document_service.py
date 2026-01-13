@@ -18,8 +18,7 @@ from services import vector_store
 from models.document import (
     DocumentUploadResponse,
     DocumentListItem,
-    DocumentDeleteResponse,
-    DocumentMetadata
+    DocumentDeleteResponse
 )
 
 # Initialize OpenAI client
@@ -154,7 +153,7 @@ async def upload_document(file: UploadFile) -> DocumentUploadResponse:
             chunks_to_insert.append(chunk_doc)
 
         # Step 5: Insert into MongoDB
-        inserted_ids = await vector_store.insert_chunks(chunks_to_insert)
+        await vector_store.insert_chunks(chunks_to_insert)
 
         return DocumentUploadResponse(
             id=document_id,
