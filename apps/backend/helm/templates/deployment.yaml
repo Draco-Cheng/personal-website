@@ -29,6 +29,24 @@ spec:
           value: {{ $value | quote }}
         {{- end }}
         {{- end }}
+        {{- if .Values.secrets.enabled }}
+        # Secrets from Kubernetes Secret
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secrets.name }}
+              key: OPENAI_API_KEY
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secrets.name }}
+              key: MONGODB_URI
+        - name: ADMIN_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secrets.name }}
+              key: ADMIN_API_KEY
+        {{- end }}
         {{- if .Values.resources }}
         resources:
           {{- toYaml .Values.resources | nindent 10 }}

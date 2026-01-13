@@ -56,6 +56,12 @@ __pycache__/
 .pytest_cache/
 .env
 .env.*
+
+# Kubernetes Secrets (NEVER commit!)
+**/helm/secrets.yaml
+**/k8s/secrets.yaml
+*secret*.yaml
+!*secret*.example.yaml
 # Poetry
 poetry.lock
 # pip-tools

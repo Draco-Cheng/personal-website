@@ -5,7 +5,25 @@ description = "FastAPI backend for Nx monorepo"
 dependencies = [
     "fastapi>=0.111.0",
     "uvicorn>=0.30.0",
-    "openai>=1.0.0"
+    "openai>=1.0.0",
+
+    # RAG dependencies
+    "langchain>=0.1.0",
+    "langchain-openai>=0.0.5",
+    "langchain-mongodb>=0.1.0",
+    "motor>=3.3.0",
+    "pymongo[srv]>=4.6.0",
+
+    # File parsing
+    "PyPDF2>=3.0.0",
+    "pdfplumber>=0.10.0",
+    "python-docx>=1.1.0",
+    "openpyxl>=3.1.0",
+    "python-multipart>=0.0.6",
+
+    # Utilities
+    "tiktoken>=0.5.0",
+    "python-dotenv>=1.0.0",
 ]
 requires-python = ">=3.10"
 

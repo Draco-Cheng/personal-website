@@ -3,8 +3,23 @@ service:
 
 resources:
   requests:
-    memory: "64Mi"
+    memory: "128Mi"
     cpu: "100m"
   limits:
-    memory: "128Mi"
+    memory: "256Mi"
     cpu: "200m"
+
+# Kubernetes Secret configuration
+secrets:
+  enabled: true
+  name: backend-secrets
+
+# Non-sensitive environment variables
+env:
+  MONGODB_DB_NAME: "personal_website"
+  MONGODB_COLLECTION: "documents"
+  VECTOR_INDEX_NAME: "vector_index"
+  EMBEDDING_MODEL: "text-embedding-3-small"
+  CHUNK_SIZE: "1000"
+  CHUNK_OVERLAP: "200"
+  MAX_FILE_SIZE_MB: "10"

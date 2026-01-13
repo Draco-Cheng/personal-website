@@ -4,7 +4,8 @@
   width: 100%;
   max-width: 400px;
   height: 600px;
-  background: hsl(var(--background));
+  max-height: calc(100dvh - 150px);
+  background: var(--background);
   border-radius: var(--radius-md, 8px);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
   overflow: hidden;

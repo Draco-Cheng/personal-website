@@ -19,7 +19,7 @@ export default function RootLayout({
       <body>
         <Menu />
         {children}
-        {/* <ChatbotWidget /> */}
+        <ChatbotWidget />
       </body>
     </html>
   );
