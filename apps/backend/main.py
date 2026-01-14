@@ -13,7 +13,21 @@ async def lifespan(app: FastAPI):
     # Startup: Connect to MongoDB
     if config.settings.MONGODB_URI:
         try:
-            config.mongodb_client = AsyncIOMotorClient(config.settings.MONGODB_URI)
+            # Configure TLS options for OpenSSL 3.x compatibility with MongoDB Atlas
+            import ssl
+
+            # Create SSL context with relaxed security for MongoDB Atlas
+            ssl_context = ssl.create_default_context()
+            # Set minimum TLS version to 1.2 (MongoDB Atlas requirement)
+            ssl_context.minimum_version = ssl.TLSVersion.TLSv1_2
+            # Allow legacy server connect (fixes OpenSSL 3.5+ compatibility issues)
+            ssl_context.options |= 0x4  # OP_LEGACY_SERVER_CONNECT
+
+            config.mongodb_client = AsyncIOMotorClient(
+                config.settings.MONGODB_URI,
+                tlsCAFile=None,  # Use system CA certificates
+                ssl_context=ssl_context
+            )
             # Verify connection
             await config.mongodb_client.admin.command('ping')
             print("[OK] MongoDB connected successfully")
