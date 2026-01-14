@@ -59,7 +59,7 @@ async def test_vector_search():
             print("  2. No documents in the collection")
 
     except Exception as e:
-        print(f"ERROR: Vector Search failed!")
+        print("ERROR: Vector Search failed!")
         print(f"Error: {str(e)}")
         print("\nPossible causes:")
         print("  1. Vector Search Index 'vector_index' does not exist")
