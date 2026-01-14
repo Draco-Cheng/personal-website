@@ -1,6 +1,9 @@
 service:
   port: 8000
 
+image:
+  pullPolicy: Always  # Always pull latest image to avoid cache issues
+
 resources:
   requests:
     memory: "64Mi"
