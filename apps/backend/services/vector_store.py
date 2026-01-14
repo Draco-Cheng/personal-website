@@ -30,7 +30,7 @@ async def insert_chunks(chunks: List[Dict]) -> List[str]:
     return [str(id) for id in result.inserted_ids]
 
 
-async def vector_search(query_embedding: List[float], top_k: int = 5, score_threshold: float = 0.7) -> List[Dict]:
+async def vector_search(query_embedding: List[float], top_k: int = 5, score_threshold: float = 0.5) -> List[Dict]:
     """
     Perform vector similarity search using MongoDB Atlas Vector Search.
 

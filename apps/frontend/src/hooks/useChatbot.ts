@@ -34,6 +34,7 @@ export function useChatbot() {
           body: JSON.stringify({
             message: text,
             history: messages,
+            use_rag: true,
           }),
         });
 

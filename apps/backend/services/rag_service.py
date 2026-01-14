@@ -21,7 +21,7 @@ except Exception as e:
     print(f"Warning: OpenAI client initialization failed in rag_service: {e}")
 
 
-async def retrieve_relevant_chunks(query: str, top_k: int = 5, score_threshold: float = 0.7) -> List[Dict]:
+async def retrieve_relevant_chunks(query: str, top_k: int = 5, score_threshold: float = 0.5) -> List[Dict]:
     """
     Retrieve relevant document chunks for a query using vector search.
 
@@ -51,6 +51,10 @@ async def retrieve_relevant_chunks(query: str, top_k: int = 5, score_threshold: 
         score_threshold=score_threshold
     )
 
+    print(f"[DEBUG] Vector search returned {len(results)} chunks for query: {query[:50]}...")
+    for i, result in enumerate(results[:3]):  # Print first 3 results
+        print(f"[DEBUG]   Chunk {i+1}: {result.get('filename')} (score: {result.get('score', 0):.3f})")
+
     return results
 
 
@@ -71,19 +75,17 @@ def build_rag_prompt(system_prompt: str, query: str, chunks: List[Dict]) -> List
     # Add retrieved context as system message
     if chunks:
         context_parts = []
-        for i, chunk in enumerate(chunks, 1):
-            filename = chunk.get("filename", "Unknown")
+        for chunk in chunks:
             content = chunk.get("content", "")
-            score = chunk.get("score", 0)
-
-            context_parts.append(
-                f"[Document {i}: {filename} (relevance: {score:.2%})]\n{content}"
-            )
+            context_parts.append(content)
 
         context_message = (
-            "Below are relevant document contents. Please answer the user's question based on this information. "
-            "If the documents don't contain relevant information, please honestly tell the user that you couldn't find the relevant data:\n\n" +
-            "\n\n---\n\n".join(context_parts)
+            "Here is information about Draco:\n\n" +
+            "\n\n".join(context_parts) +
+            "\n\n---\n\nAnswer the user's question naturally and conversationally based ONLY on the above information. "
+            "Don't mention 'documents', 'files', or 'provided information'. "
+            "IMPORTANT: Only state facts explicitly mentioned above. Don't infer or assume additional details. "
+            "If the information doesn't contain the answer, say you don't have that specific information."
         )
 
         messages.append({"role": "system", "content": context_message})
@@ -120,7 +122,7 @@ async def generate_rag_response(
         raise Exception("OpenAI client not available")
 
     # Step 1: Retrieve relevant chunks
-    chunks = await retrieve_relevant_chunks(query, top_k=5, score_threshold=0.7)
+    chunks = await retrieve_relevant_chunks(query, top_k=5, score_threshold=0.5)
 
     # Step 2: Build prompt with context
     messages = build_rag_prompt(system_prompt, query, chunks)
