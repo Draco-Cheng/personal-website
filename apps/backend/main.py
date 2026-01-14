@@ -43,6 +43,15 @@ def health_check():
     """
     return {"status": "ok", "service": "backend"}
 
+@app.get("/health")
+@app.head("/health")
+def kubernetes_health():
+    """
+    Dedicated health check endpoint for Kubernetes probes.
+    Returns minimal response to reduce log noise.
+    """
+    return {"status": "healthy"}
+
 # Include routers
 app.include_router(chat.api_router)
 app.include_router(documents.router)
