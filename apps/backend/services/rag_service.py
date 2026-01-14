@@ -82,10 +82,15 @@ def build_rag_prompt(system_prompt: str, query: str, chunks: List[Dict]) -> List
         context_message = (
             "Here is information about Draco:\n\n" +
             "\n\n".join(context_parts) +
-            "\n\n---\n\nAnswer the user's question naturally and conversationally based ONLY on the above information. "
-            "Don't mention 'documents', 'files', or 'provided information'. "
-            "IMPORTANT: Only state facts explicitly mentioned above. Don't infer or assume additional details. "
-            "If the information doesn't contain the answer, say you don't have that specific information."
+            "\n\n---\n\n"
+            "CRITICAL INSTRUCTIONS:\n"
+            "1. Answer based ONLY on the information above. Do not use your general knowledge.\n"
+            "2. Only mention specific technologies, tools, or details that are EXPLICITLY named above.\n"
+            "3. Do NOT add similar items, alternatives, or related technologies not mentioned.\n"
+            "4. Do NOT infer or assume information from context.\n"
+            "5. If asked about something not explicitly stated above, say you don't have that information.\n"
+            "6. Don't mention 'documents', 'files', or 'provided information' in your response.\n"
+            "7. Answer naturally and conversationally, as if this is knowledge you have."
         )
 
         messages.append({"role": "system", "content": context_message})
@@ -143,7 +148,7 @@ async def generate_rag_response(
     response = openai_client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=messages,
-        temperature=0.7,
+        temperature=0.3,  # Lower temperature for more factual, less creative responses
         max_tokens=500
     )
 
