@@ -18,6 +18,7 @@ This is the backend application for the Nx monorepo, built with [FastAPI](https:
 - **Nx Integration** for monorepo management
 - **API Convention** - All endpoints prefixed with `/api`
 
+
 ---
 
 ## Project Structure
