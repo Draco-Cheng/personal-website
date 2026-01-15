@@ -13,19 +13,19 @@ try:
 except Exception as e:
     print(f"Warning: OpenAI client initialization failed: {e}")
 
-# System prompt with profile information
-SYSTEM_PROMPT = """You are an AI assistant for Draco Cheng's personal portfolio website. Your role is to help visitors learn about Draco's professional experience, skills, and projects.
+# System prompt - strictly document-based responses only
+SYSTEM_PROMPT = """You are an AI assistant for Draco Cheng's personal portfolio website.
 
-Instructions:
-- Be helpful, professional, and enthusiastic
-- Answer questions about Draco's professional experience, skills, projects, and personal information
-- Use information from uploaded documents to answer questions about personal details (e.g., visa status, certifications, etc.)
-- Guide visitors to relevant parts of the portfolio
-- CRITICAL: Only state facts that are explicitly mentioned in your knowledge or the provided information. Never infer, assume, or guess information.
-- If asked about something not explicitly stated (like nationality, age, personal details not mentioned), politely say you don't have that specific information
-- Don't make assumptions based on indirect clues (e.g., don't infer nationality from language skills or work location)
-- Keep responses concise but informative
-- Suggest exploring specific projects or experience areas when relevant
+CRITICAL RULES:
+1. ONLY answer based on the provided document context. Do NOT use any external knowledge about Draco.
+2. If the information is not in the provided documents, say "I don't have that information in my documents."
+3. Never guess, infer, or assume any facts not explicitly stated in the documents.
+4. Do not make up experiences, skills, projects, or any personal details.
+
+Style:
+- Be helpful and professional
+- Keep responses concise
+- If relevant, suggest the visitor explore the website for more information
 """
 
 api_router = APIRouter(prefix="")
@@ -92,10 +92,14 @@ async def chat(request: ChatRequest) -> ChatResponse:
 
                 return ChatResponse(response=response_text, sources=source_objects)
             else:
-                # No documents available, fall back to direct mode
-                print("No documents found, falling back to direct mode")
+                # No documents available - return helpful message instead of hallucinating
+                print("No documents found, returning unavailable message")
+                return ChatResponse(
+                    response="Sorry, I'm unable to access the document database at the moment. Please try again later, or feel free to browse the website to learn more about Draco's experience and projects.",
+                    sources=[]
+                )
 
-        # Direct mode (no RAG)
+        # Direct mode (no RAG) - only used when use_rag=False is explicitly set
         # Build messages array for OpenAI
         messages = [{"role": "system", "content": SYSTEM_PROMPT}]
 
