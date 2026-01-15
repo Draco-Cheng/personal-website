@@ -123,7 +123,9 @@ async def chat(request: ChatRequest) -> ChatResponse:
         return ChatResponse(response=assistant_message, sources=[])
 
     except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Error communicating with OpenAI: {str(e)}"
+        print(f"[ERROR] Chat endpoint error: {e}")
+        # Return a friendly response instead of an error
+        return ChatResponse(
+            response="Sorry, I encountered an issue processing your request. Please try again later.",
+            sources=[]
         )
