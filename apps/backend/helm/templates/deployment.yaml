@@ -14,19 +14,6 @@ spec:
       labels:
         app: {{ .Chart.Name }}
     spec:
-      # Use Google DNS to resolve MongoDB Atlas SRV records
-      dnsPolicy: "None"
-      dnsConfig:
-        nameservers:
-          - 8.8.8.8
-          - 8.8.4.4
-        searches:
-          - personal-website.svc.cluster.local
-          - svc.cluster.local
-          - cluster.local
-        options:
-          - name: ndots
-            value: "5"
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

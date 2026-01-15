@@ -1,6 +1,5 @@
 # Backend Dockerfile for FastAPI (development)
-# Use Debian Bullseye base image to avoid OpenSSL 3.5 compatibility issues
-FROM python:3.11-slim-bullseye
+FROM python:3.11-slim
 
 # Set working directory
 WORKDIR /app
