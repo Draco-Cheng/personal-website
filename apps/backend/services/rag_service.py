@@ -4,21 +4,10 @@ Handles vector search, prompt building, and response generation.
 """
 
 from typing import List, Tuple, Dict
-import os
-from openai import OpenAI
 
 import config
 from services import vector_store
 from models.chat import ChatMessage
-
-# Initialize OpenAI client
-openai_client = None
-try:
-    api_key = os.getenv("OPENAI_API_KEY")
-    if api_key:
-        openai_client = OpenAI(api_key=api_key)
-except Exception as e:
-    print(f"Warning: OpenAI client initialization failed in rag_service: {e}")
 
 
 async def retrieve_relevant_chunks(query: str, top_k: int = 5, score_threshold: float = 0.5) -> List[Dict]:
@@ -33,11 +22,11 @@ async def retrieve_relevant_chunks(query: str, top_k: int = 5, score_threshold: 
     Returns:
         List of relevant chunks with scores
     """
-    if not openai_client:
+    if not config.openai_client:
         raise Exception("OpenAI client not available")
 
     # Generate embedding for the query
-    response = openai_client.embeddings.create(
+    response = config.openai_client.embeddings.create(
         input=[query],
         model=config.settings.EMBEDDING_MODEL
     )
@@ -123,7 +112,7 @@ async def generate_rag_response(
     Returns:
         Tuple of (response_text, sources)
     """
-    if not openai_client:
+    if not config.openai_client:
         raise Exception("OpenAI client not available")
 
     # Step 1: Retrieve relevant chunks
@@ -145,7 +134,7 @@ async def generate_rag_response(
         messages = messages[:-1] + history_messages + [messages[-1]]
 
     # Step 3: Call GPT
-    response = openai_client.chat.completions.create(
+    response = config.openai_client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=messages,
         temperature=0.3,  # Lower temperature for more factual, less creative responses

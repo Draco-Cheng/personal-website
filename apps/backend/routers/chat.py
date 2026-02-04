@@ -1,17 +1,7 @@
-import os
 from fastapi import APIRouter, HTTPException
-from openai import OpenAI
 from models.chat import ChatRequest, ChatResponse, Source
 from services import rag_service
-
-# Initialize OpenAI client
-client = None
-try:
-    api_key = os.getenv("OPENAI_API_KEY")
-    if api_key:
-        client = OpenAI(api_key=api_key)
-except Exception as e:
-    print(f"Warning: OpenAI client initialization failed: {e}")
+import config
 
 # System prompt - strictly document-based responses only
 SYSTEM_PROMPT = """You are an AI assistant for Draco Cheng's personal portfolio website.
@@ -55,7 +45,7 @@ async def chat(request: ChatRequest) -> ChatResponse:
             detail="Message cannot be empty"
         )
 
-    if not client:
+    if not config.openai_client:
         raise HTTPException(
             status_code=503,
             detail="OpenAI service is not available. Please configure OPENAI_API_KEY."
@@ -111,7 +101,7 @@ async def chat(request: ChatRequest) -> ChatResponse:
         messages.append({"role": "user", "content": request.message})
 
         # Call OpenAI API
-        response = client.chat.completions.create(
+        response = config.openai_client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=messages,
             temperature=0.7,

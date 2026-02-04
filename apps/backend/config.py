@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
+from openai import OpenAI
 
 # Load .env file from the same directory as this config file
 env_path = Path(__file__).parent / '.env'
@@ -32,3 +33,11 @@ settings = Settings()
 
 # Global MongoDB client (initialized in main.py lifespan)
 mongodb_client: AsyncIOMotorClient = None
+
+# Global OpenAI client
+openai_client: OpenAI | None = None
+if settings.OPENAI_API_KEY:
+    try:
+        openai_client = OpenAI(api_key=settings.OPENAI_API_KEY)
+    except Exception as e:
+        print(f"Warning: OpenAI client initialization failed: {e}")

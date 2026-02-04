@@ -7,9 +7,7 @@ from typing import List, Dict
 from fastapi import UploadFile, HTTPException
 from datetime import datetime
 import uuid
-import os
 
-from openai import OpenAI
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 import config
@@ -20,15 +18,6 @@ from models.document import (
     DocumentListItem,
     DocumentDeleteResponse
 )
-
-# Initialize OpenAI client
-openai_client = None
-try:
-    api_key = os.getenv("OPENAI_API_KEY")
-    if api_key:
-        openai_client = OpenAI(api_key=api_key)
-except Exception as e:
-    print(f"Warning: OpenAI client initialization failed in document_service: {e}")
 
 # File type whitelist
 ALLOWED_CONTENT_TYPES = {
@@ -62,7 +51,7 @@ async def upload_document(file: UploadFile) -> DocumentUploadResponse:
     Raises:
         HTTPException: If validation or processing fails
     """
-    if not openai_client:
+    if not config.openai_client:
         raise HTTPException(
             status_code=503,
             detail="OpenAI service not available. Cannot process documents."
@@ -184,7 +173,7 @@ async def generate_embeddings(texts: List[str]) -> List[List[float]]:
     Returns:
         List of embedding vectors
     """
-    if not openai_client:
+    if not config.openai_client:
         raise Exception("OpenAI client not available")
 
     # Batch process embeddings (OpenAI allows up to 2048 inputs per request)
@@ -194,7 +183,7 @@ async def generate_embeddings(texts: List[str]) -> List[List[float]]:
     for i in range(0, len(texts), batch_size):
         batch = texts[i:i + batch_size]
 
-        response = openai_client.embeddings.create(
+        response = config.openai_client.embeddings.create(
             input=batch,
             model=config.settings.EMBEDDING_MODEL
         )
