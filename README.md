@@ -222,6 +222,26 @@ python -m pytest -v
 
 ---
 
+## ☸️ Kubernetes Secrets Configuration
+
+Before deploying to Kubernetes, create the required secrets for the backend:
+
+```bash
+kubectl create secret generic backend-secrets \
+  --from-literal=OPENAI_API_KEY='<your-openai-api-key>' \
+  --from-literal=MONGODB_URI='<your-mongodb-connection-string>' \
+  --from-literal=ADMIN_API_KEY='<your-admin-api-key>' \
+  -n personal-website
+```
+
+| Variable | Description |
+|----------|-------------|
+| `OPENAI_API_KEY` | OpenAI API key for AI features |
+| `MONGODB_URI` | MongoDB connection string |
+| `ADMIN_API_KEY` | API key for admin endpoints |
+
+---
+
 ## 📚 Other Notes
 
 - `.gitignore` supports both Node.js/TS and Python.

@@ -77,3 +77,6 @@ requirements*.txt
 
 
 test-output
+
+# secrets
+*secrets.yaml
