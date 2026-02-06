@@ -31,9 +31,6 @@ concurrency:
   group: manual-deploy-${{ github.ref }}
   cancel-in-progress: false
 
-env:
-  K8S_NAMESPACE: personal-website
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -43,6 +40,7 @@ jobs:
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
       # === Kubernetes ===
+      K8S_NAMESPACE: ${{ secrets.K8S_NAMESPACE || 'default' }}
       K8S_CA_DATA: ${{ secrets.K8S_CA_DATA }}
       K8S_SERVER: ${{ secrets.K8S_SERVER }}
       # Auth Method 1: Token-based (recommended for cloud providers)

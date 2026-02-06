@@ -20,9 +20,6 @@ concurrency:
   group: deploy-${{ github.ref }}
   cancel-in-progress: false
 
-env:
-  K8S_NAMESPACE: personal-website
-
 jobs:
   # Job 1: Check if there are affected projects
   check:
@@ -212,6 +209,7 @@ jobs:
       # === Docker settings ===
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       # === Kubernetes ===
+      K8S_NAMESPACE: ${{ secrets.K8S_NAMESPACE || 'default' }}
       K8S_CA_DATA: ${{ secrets.K8S_CA_DATA }}
       K8S_SERVER: ${{ secrets.K8S_SERVER }}
       K8S_USER_TOKEN: ${{ secrets.K8S_USER_TOKEN }}
