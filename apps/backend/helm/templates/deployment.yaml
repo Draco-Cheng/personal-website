@@ -55,11 +55,15 @@ spec:
           httpGet:
             path: /health
             port: {{ .Values.service.port }}
-          initialDelaySeconds: 30
-          periodSeconds: 30  # Reduced frequency: every 30s instead of 10s
+          initialDelaySeconds: 120
+          periodSeconds: 60
+          timeoutSeconds: 30
+          failureThreshold: 5
         readinessProbe:
           httpGet:
             path: /health
             port: {{ .Values.service.port }}
-          initialDelaySeconds: 5
-          periodSeconds: 15  # Reduced frequency: every 15s instead of 5s
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 30
+          failureThreshold: 3
