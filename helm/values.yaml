@@ -4,9 +4,9 @@ namespace:
 
 ingress:
   className: traefik
+  host: ""
   rules:
-    - host: dracocheng.com
-      paths:
+    - paths:
         - path: /
           serviceName: frontend-service
           servicePort: 8080
