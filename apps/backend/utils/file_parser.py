@@ -40,12 +40,14 @@ def parse_pdf(file_content: bytes) -> str:
 
         return result
 
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         # Fallback to pdfplumber for complex PDFs
         try:
             return parse_pdf_with_pdfplumber(file_content)
-        except Exception as fallback_error:
-            raise Exception(f"PDF parsing failed: {str(e)}, Fallback also failed: {str(fallback_error)}")
+        except Exception as fallback_error:  # noqa: BLE001
+            raise RuntimeError(
+                f"PDF parsing failed: {e!s}, Fallback also failed: {fallback_error!s}"
+            ) from fallback_error
 
 
 def parse_pdf_with_pdfplumber(file_content: bytes) -> str:
@@ -199,7 +201,7 @@ def parse_file(file_content: bytes, filename: str) -> str:
         return parse_docx(file_content)
     elif filename_lower.endswith(".xlsx"):
         return parse_xlsx(file_content)
-    elif filename_lower.endswith(".md") or filename_lower.endswith(".markdown"):
+    elif filename_lower.endswith((".md", ".markdown")):
         return parse_markdown(file_content)
     elif filename_lower.endswith(".txt"):
         return parse_text(file_content)

@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
 from openai import OpenAI
@@ -39,5 +40,5 @@ openai_client: OpenAI | None = None
 if settings.OPENAI_API_KEY:
     try:
         openai_client = OpenAI(api_key=settings.OPENAI_API_KEY)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"Warning: OpenAI client initialization failed: {e}")
