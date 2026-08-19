@@ -16,7 +16,7 @@ const experience = [
     company: "Yi Ying Orchids (Side Project)",
     period: "2025 — Present",
     summary:
-      "Designed and built a production e-commerce platform end-to-end — Angular 21 SSR storefront, admin dashboard, and FastAPI backend, deployed on Kubernetes with GitHub Actions CI/CD.",
+      "Own the platform solo end-to-end: architected the Nx monorepo, set up Kubernetes/Helm deployment with cert-manager TLS and tag-based CI/CD releases, and built real-time WebSocket chat, i18n (zh-TW/en/ja), and an AI-assisted catalog import pipeline.",
   },
   {
     role: "Senior Software Developer",
