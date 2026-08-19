@@ -3,6 +3,7 @@ Test script to verify Vector Search Index is working
 """
 import asyncio
 import os
+
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
 
@@ -58,9 +59,9 @@ async def test_vector_search():
             print("  1. The index is still building (check Atlas UI)")
             print("  2. No documents in the collection")
 
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print("ERROR: Vector Search failed!")
-        print(f"Error: {str(e)}")
+        print(f"Error: {e!s}")
         print("\nPossible causes:")
         print("  1. Vector Search Index 'vector_index' does not exist")
         print("  2. Index is still building (check Atlas UI)")

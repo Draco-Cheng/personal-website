@@ -1,7 +1,8 @@
 from fastapi import APIRouter, HTTPException
+
+import config
 from models.chat import ChatRequest, ChatResponse, Source
 from services import rag_service
-import config
 
 # System prompt - strictly document-based responses only
 SYSTEM_PROMPT = """You are an AI assistant for Draco Cheng's personal portfolio website.
@@ -112,7 +113,7 @@ async def chat(request: ChatRequest) -> ChatResponse:
 
         return ChatResponse(response=assistant_message, sources=[])
 
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"[ERROR] Chat endpoint error: {e}")
         # Return a friendly response instead of an error
         return ChatResponse(

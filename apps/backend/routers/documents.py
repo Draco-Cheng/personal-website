@@ -3,19 +3,19 @@ Documents API router.
 Handles document upload, listing, and deletion endpoints.
 """
 
-from fastapi import APIRouter, File, UploadFile, HTTPException, Header, Depends
-from typing import List, Optional
+
+from fastapi import APIRouter, Depends, File, Header, HTTPException, UploadFile
+
 import config
-
-from services import document_service, vector_store
 from models.document import (
-    DocumentUploadResponse,
+    DocumentDeleteResponse,
     DocumentListItem,
-    DocumentDeleteResponse
+    DocumentUploadResponse,
 )
+from services import document_service, vector_store
 
 
-def verify_admin_key(x_api_key: Optional[str] = Header(None)):
+def verify_admin_key(x_api_key: str | None = Header(None)):
     """
     Verify admin API key for protected endpoints.
     Used as a dependency for all admin routes.
@@ -50,7 +50,7 @@ router = APIRouter(
 
 
 @router.post("/upload", response_model=DocumentUploadResponse)
-async def upload_document(file: UploadFile = File(...)):
+async def upload_document(file: UploadFile = File(...)):  # noqa: B008
     """
     Upload and process a document.
 
@@ -62,7 +62,7 @@ async def upload_document(file: UploadFile = File(...)):
     return await document_service.upload_document(file)
 
 
-@router.get("", response_model=List[DocumentListItem])
+@router.get("", response_model=list[DocumentListItem])
 async def list_documents():
     """
     List all uploaded documents.

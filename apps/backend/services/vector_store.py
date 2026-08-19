@@ -3,19 +3,20 @@ Vector store service for MongoDB Atlas Vector Search.
 Handles storage and retrieval of document embeddings.
 """
 
-from typing import List, Dict, Optional
+
 import config
+
 
 async def get_collection():
     """Get the MongoDB collection for documents"""
     if not config.mongodb_client:
-        raise Exception("MongoDB client not initialized")
+        raise RuntimeError("MongoDB client not initialized")
 
     db = config.mongodb_client[config.settings.MONGODB_DB_NAME]
     return db[config.settings.MONGODB_COLLECTION]
 
 
-async def insert_chunks(chunks: List[Dict]) -> List[str]:
+async def insert_chunks(chunks: list[dict]) -> list[str]:
     """
     Insert document chunks with embeddings into MongoDB.
 
@@ -30,7 +31,7 @@ async def insert_chunks(chunks: List[Dict]) -> List[str]:
     return [str(id) for id in result.inserted_ids]
 
 
-async def vector_search(query_embedding: List[float], top_k: int = 5, score_threshold: float = 0.5) -> List[Dict]:
+async def vector_search(query_embedding: list[float], top_k: int = 5, score_threshold: float = 0.5) -> list[dict]:
     """
     Perform vector similarity search using MongoDB Atlas Vector Search.
 
@@ -76,7 +77,7 @@ async def vector_search(query_embedding: List[float], top_k: int = 5, score_thre
     return filtered_results
 
 
-async def list_all_documents() -> List[Dict]:
+async def list_all_documents() -> list[dict]:
     """
     List all unique documents (grouped by document_id).
 
@@ -133,7 +134,7 @@ async def delete_document(document_id: str) -> int:
     return result.deleted_count
 
 
-async def get_document_by_id(document_id: str) -> Optional[Dict]:
+async def get_document_by_id(document_id: str) -> dict | None:
     """
     Get document metadata by ID.
 
@@ -167,7 +168,7 @@ async def get_document_by_id(document_id: str) -> Optional[Dict]:
     }
 
 
-async def get_storage_stats() -> Dict:
+async def get_storage_stats() -> dict:
     """
     Get storage statistics for monitoring.
 

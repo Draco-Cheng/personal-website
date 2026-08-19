@@ -6,6 +6,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import config
 from routers import chat, documents
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
@@ -19,7 +20,7 @@ async def lifespan(app: FastAPI):
             # Verify connection
             await config.mongodb_client.admin.command('ping')
             print("[OK] MongoDB connected successfully")
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(f"[WARNING] MongoDB connection failed: {e}")
             print("  RAG features will be unavailable")
             config.mongodb_client = None
