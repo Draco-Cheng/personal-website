@@ -12,6 +12,13 @@ const highlights = [
 
 const experience = [
   {
+    role: "Independent Full-Stack Developer",
+    company: "Yi Ying Orchids (Side Project)",
+    period: "2025 — Present",
+    summary:
+      "Designed and built a production e-commerce platform end-to-end — Angular 21 SSR storefront, admin dashboard, and FastAPI backend, deployed on Kubernetes with GitHub Actions CI/CD.",
+  },
+  {
     role: "Senior Software Developer",
     company: "Trend Micro",
     period: "2019 — 2025",
@@ -50,16 +57,25 @@ const experience = [
 
 const projects = [
   {
+    name: "Yi Ying Orchids",
+    description:
+      "Full-stack e-commerce platform for a live orchid business — Angular 21 SSR storefront, admin dashboard, and FastAPI backend, deployed on Kubernetes with CI/CD.",
+    link: "https://yiyingorchids.com/",
+    linkLabel: "Visit site →",
+  },
+  {
     name: "Mono Repo Skeleton",
     description:
       "Nx-powered template that ships a Next.js 15 frontend and FastAPI backend with Docker, Helm charts, and CI-ready testing presets.",
     link: "https://github.com/Draco-Cheng/mono-repo-skeleton",
+    linkLabel: "Read more →",
   },
   {
     name: "AI_README MCP Server",
     description:
       "Model Context Protocol server that discovers, routes, and validates AI_README guides so coding copilots follow team conventions by default.",
     link: "https://github.com/Draco-Cheng/ai-readme-mcp",
+    linkLabel: "Read more →",
   },
 ];
 
@@ -146,7 +162,7 @@ const ProfilePage: React.FC = () => (
                 rel="noopener noreferrer"
                 className={styles.projectLink}
               >
-                Read more →
+                {project.linkLabel}
               </Link>
             </article>
           ))}
