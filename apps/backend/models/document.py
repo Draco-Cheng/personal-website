@@ -1,5 +1,6 @@
+
 from pydantic import BaseModel
-from typing import Optional
+
 
 class DocumentMetadata(BaseModel):
     """Metadata for a document chunk"""
@@ -13,7 +14,7 @@ class DocumentChunk(BaseModel):
     filename: str
     chunk_index: int
     content: str
-    embedding: Optional[list[float]] = None
+    embedding: list[float] | None = None
     metadata: DocumentMetadata
 
 class DocumentUploadResponse(BaseModel):
@@ -22,7 +23,7 @@ class DocumentUploadResponse(BaseModel):
     filename: str
     status: str
     chunk_count: int
-    message: Optional[str] = None
+    message: str | None = None
 
 class DocumentListItem(BaseModel):
     """Summary information about a document"""

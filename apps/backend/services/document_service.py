@@ -3,21 +3,20 @@ Document processing service.
 Handles file upload, parsing, chunking, embedding, and storage.
 """
 
-from typing import List, Dict
-from fastapi import UploadFile, HTTPException
-from datetime import datetime
 import uuid
+from datetime import UTC, datetime
 
+from fastapi import HTTPException, UploadFile
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 import config
-from utils import file_parser
-from services import vector_store
 from models.document import (
-    DocumentUploadResponse,
+    DocumentDeleteResponse,
     DocumentListItem,
-    DocumentDeleteResponse
+    DocumentUploadResponse,
 )
+from services import vector_store
+from utils import file_parser
 
 # File type whitelist
 ALLOWED_CONTENT_TYPES = {
@@ -122,7 +121,7 @@ async def upload_document(file: UploadFile) -> DocumentUploadResponse:
 
         # Step 4: Prepare document chunks for storage
         document_id = str(uuid.uuid4())
-        upload_date = datetime.utcnow().isoformat()
+        upload_date = datetime.now(UTC).isoformat()
         file_type = file_ext.lstrip(".")
 
         chunks_to_insert = []
@@ -159,11 +158,11 @@ async def upload_document(file: UploadFile) -> DocumentUploadResponse:
     except Exception as e:
         raise HTTPException(
             status_code=500,
-            detail=f"Document processing failed: {str(e)}"
-        )
+            detail=f"Document processing failed: {e!s}"
+        ) from e
 
 
-async def generate_embeddings(texts: List[str]) -> List[List[float]]:
+async def generate_embeddings(texts: list[str]) -> list[list[float]]:
     """
     Generate embeddings for a list of texts using OpenAI.
 
@@ -174,7 +173,7 @@ async def generate_embeddings(texts: List[str]) -> List[List[float]]:
         List of embedding vectors
     """
     if not config.openai_client:
-        raise Exception("OpenAI client not available")
+        raise RuntimeError("OpenAI client not available")
 
     # Batch process embeddings (OpenAI allows up to 2048 inputs per request)
     batch_size = 100
@@ -194,7 +193,7 @@ async def generate_embeddings(texts: List[str]) -> List[List[float]]:
     return all_embeddings
 
 
-async def list_documents() -> List[DocumentListItem]:
+async def list_documents() -> list[DocumentListItem]:
     """
     List all uploaded documents.
 
@@ -246,7 +245,7 @@ async def delete_document(document_id: str) -> DocumentDeleteResponse:
     )
 
 
-async def get_document_info(document_id: str) -> Dict:
+async def get_document_info(document_id: str) -> dict:
     """
     Get detailed information about a document.
 

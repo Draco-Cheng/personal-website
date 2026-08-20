@@ -1,5 +1,6 @@
+
 from pydantic import BaseModel
-from typing import List
+
 
 class ChatMessage(BaseModel):
     role: str
@@ -19,4 +20,4 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     response: str
-    sources: List[Source] = []  # RAG sources (empty if RAG not used)
+    sources: list[Source] = []  # RAG sources (empty if RAG not used)

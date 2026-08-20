@@ -3,14 +3,13 @@ RAG (Retrieval-Augmented Generation) service.
 Handles vector search, prompt building, and response generation.
 """
 
-from typing import List, Tuple, Dict
 
 import config
-from services import vector_store
 from models.chat import ChatMessage
+from services import vector_store
 
 
-async def retrieve_relevant_chunks(query: str, top_k: int = 5, score_threshold: float = 0.5) -> List[Dict]:
+async def retrieve_relevant_chunks(query: str, top_k: int = 5, score_threshold: float = 0.5) -> list[dict]:
     """
     Retrieve relevant document chunks for a query using vector search.
 
@@ -23,7 +22,7 @@ async def retrieve_relevant_chunks(query: str, top_k: int = 5, score_threshold: 
         List of relevant chunks with scores
     """
     if not config.openai_client:
-        raise Exception("OpenAI client not available")
+        raise RuntimeError("OpenAI client not available")
 
     # Generate embedding for the query
     response = config.openai_client.embeddings.create(
@@ -47,7 +46,7 @@ async def retrieve_relevant_chunks(query: str, top_k: int = 5, score_threshold: 
     return results
 
 
-def build_rag_prompt(system_prompt: str, query: str, chunks: List[Dict]) -> List[Dict]:
+def build_rag_prompt(system_prompt: str, query: str, chunks: list[dict]) -> list[dict]:
     """
     Build a prompt that includes retrieved context.
 
@@ -92,9 +91,9 @@ def build_rag_prompt(system_prompt: str, query: str, chunks: List[Dict]) -> List
 
 async def generate_rag_response(
     query: str,
-    history: List[ChatMessage],
+    history: list[ChatMessage],
     system_prompt: str
-) -> Tuple[str, List[Dict]]:
+) -> tuple[str, list[dict]]:
     """
     Generate a response using RAG (Retrieval-Augmented Generation).
 
@@ -113,7 +112,7 @@ async def generate_rag_response(
         Tuple of (response_text, sources)
     """
     if not config.openai_client:
-        raise Exception("OpenAI client not available")
+        raise RuntimeError("OpenAI client not available")
 
     # Step 1: Retrieve relevant chunks
     chunks = await retrieve_relevant_chunks(query, top_k=5, score_threshold=0.5)
@@ -166,5 +165,5 @@ async def has_documents() -> bool:
     try:
         stats = await vector_store.get_storage_stats()
         return stats.get("total_documents", 0) > 0
-    except Exception:
+    except Exception:  # noqa: BLE001
         return False

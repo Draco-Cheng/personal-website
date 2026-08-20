@@ -5,6 +5,7 @@ Supports: PDF, DOCX, XLSX, Markdown, and plain text files.
 
 import io
 
+
 def parse_pdf(file_content: bytes) -> str:
     """
     Extract text from PDF file.
@@ -44,7 +45,7 @@ def parse_pdf(file_content: bytes) -> str:
         # Fallback to pdfplumber for complex PDFs
         try:
             return parse_pdf_with_pdfplumber(file_content)
-        except Exception as fallback_error:  # noqa: BLE001
+        except Exception as fallback_error:
             raise RuntimeError(
                 f"PDF parsing failed: {e!s}, Fallback also failed: {fallback_error!s}"
             ) from fallback_error
